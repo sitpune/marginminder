@@ -7,27 +7,19 @@ use DBI;
 say "____________MARGIN MINDER____________";
 # MySQL database configurations
 my $dsn = "DBI:mysql:myDB";
-my $username = "technetium";
-my $password = 'marginMinder';
+my $username = "root";
+my $password = '';
 # connect to MySQL database
 my %attr = (RaiseError=>1,  # error handling enabled 
             AutoCommit=>0); # transaction enabled
 my $dbh = DBI->connect($dsn,$username,$password, \%attr);
 
-# create tables
-my @ddl =     (
-  # create some_table table
-      "CREATE TABLE some_table (
-      
-    ) ENGINE=InnoDB;"
-); 
-# execute all create table statements        
-for my $sql(@ddl){
-  $dbh->do($sql);
-}        
-say "All tables created successfully!";
-
 #do some operations here
+#insert_one_row($dbh, "someXYZ", "password", 1);
+#delete_all_rows($dbh);
+
+#delete_one_row($dbh, "usern");
+#update_one_row($dbh, "usern", "NEW", 1);
 
 # disconnect from the MySQL database
 $dbh->disconnect();
@@ -37,17 +29,17 @@ sub delete_one_row {
     # delete one row from some_table
     # $dbh: database handle
     # $row_id: id of the row to delete
-    my($dbh,$row_id)  = @_;
-    my $sql = "DELETE FROM some_table WHERE row_id = ?";
+    my($dbh,$uname)  = @_;
+    my $sql = "DELETE FROM users WHERE uname = ?";
     my $sth = $dbh->prepare($sql);
-    return $sth->execute($row_id);
+    return $sth->execute($uname);
 }
  
 sub delete_all_rows {
     # delete all rows in some_table
     # $dbh: database handle
     my($dbh) = @_;
-    my $sql = "TRUNCATE TABLE clinks";
+    my $sql = "TRUNCATE TABLE users";
     my $sth = $dbh->prepare($sql);
     return $sth->execute(); 
 }
@@ -55,10 +47,10 @@ sub delete_all_rows {
 sub insert_one_row {
   eval {
     # do something risky...
-    my($dbh,) = @_;
-    my $sql= "INSERT INTO some_table (column heads comma separated) VALUE (some no. of ?s)";
+    my($dbh,$uname,$pwd,$isAdmin) = @_;
+    my $sql= "INSERT INTO users (uname,pwd,isAdmin) VALUE (?,?,?)";
     my $sth= $dbh -> prepare($sql);
-    $sth -> execute(actual vals here);
+    $sth -> execute($uname,$pwd,$isAdmin);
     # if everything is OK, commit to the database
     $dbh->commit();
     say "Inserted row successfully!";
@@ -71,18 +63,16 @@ sub insert_one_row {
 }
 
 sub update_one_row {
-  my($dbh,$row_id)  = @_;
-  my $sql = "UPDATE some_table
-           SET col1 = ?,
-               col2 = ?, 
-               col3 = ?
-    WHERE row_id = ?";
+  my($dbh,$uname,$pwd,$isAdmin)  = @_;
+  my $sql = "UPDATE users
+           SET pwd = ?, 
+               isAdmin = ?
+    WHERE uname = ?";
   my $sth = $dbh->prepare($sql);
   # bind the corresponding parameter
-  $sth->bind_param(1,$col1Val);
-  $sth->bind_param(2,$col2Val);
-  $sth->bind_param(3,$col3Val);
-  $sth->bind_param(4,$row_id);
+  $sth->bind_param(1,$pwd);
+  $sth->bind_param(2,$isAdmin);
+  $sth->bind_param(3,$uname);
   # execute the query
   $sth->execute();
   say "Updated row successfully!";
