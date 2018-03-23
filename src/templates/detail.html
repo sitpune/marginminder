@@ -1,0 +1,121 @@
+<html>
+  <head>
+    <title>
+      Details Page
+    </title>
+
+
+    <!-- Compiled and minified JavaScript -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+   <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+<script type="text/javascript">                                                        /*Unable to separate this code into a different js file*/
+window.onload = function () {
+ var chart = new CanvasJS.Chart("chartContainer",
+ {
+
+   title:{
+   text: "Trade Margins - per month"
+   },
+    data: [
+   {
+     type: "line",
+
+     dataPoints: [
+     { x: new Date(2012, 00, 1), y: 450 },
+     { x: new Date(2012, 01, 1), y: 414 },
+     { x: new Date(2012, 02, 1), y: 520 },
+     { x: new Date(2012, 03, 1), y: 460 },
+     { x: new Date(2012, 04, 1), y: 450 },
+     { x: new Date(2012, 05, 1), y: 500 },
+     { x: new Date(2012, 06, 1), y: 480 },
+     { x: new Date(2012, 07, 1), y: 480 },
+     { x: new Date(2012, 08, 1), y: 410 },
+     { x: new Date(2012, 09, 1), y: 500 },
+     { x: new Date(2012, 10, 1), y: 480 },
+     { x: new Date(2012, 11, 1), y: 510 }
+     ]
+   }
+   ]
+ });
+
+ chart.render();
+}
+</script>
+
+  </head>
+  <body>
+    <font size = "4">GSTN: </font>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for HSN..">
+    <table class="highlight" id="myTable">
+        <thead>
+          <tr>
+              <th>HSN Code</th>
+              <th>Sales</th>
+              <th>Purchase</th>
+              <th>Trade Margins</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>113231</td>
+            <td>YYz</td>
+            <td>JJZ</td>
+            <td>KJZ</td>
+          </tr>
+          <tr>
+            <td>116231</td>
+            <td>YYz</td>
+            <td>JJZ</td>
+            <td>KJZ</td>
+          </tr>
+          <tr>
+            <td>114231</td>
+            <td>YYz</td>
+            <td>JJZ</td>
+            <td>KJZ</td>
+          </tr>
+          <tr>
+            <td>118231</td>
+            <td>YYz</td>
+            <td>JJZ</td>
+            <td>KJZ</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+      <script>
+      function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[0];
+          if (td) {
+            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+      </script>
+
+
+  </body>
+
+
+  </html>

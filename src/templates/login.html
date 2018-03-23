@@ -1,0 +1,124 @@
+<html>
+<head>
+  <title>
+    Login Page
+  </title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+
+<style>
+    div {
+      text-align: center;
+    }
+    b {
+      color: grey;
+      text-align: left;
+    }
+  img
+  {
+    width: 30%;
+    height: 30%;
+  }
+.space
+{
+  height: 10%;
+}
+
+</style>
+
+</head>
+
+<body class="card-panel teal lighten-2">
+    <div class="card-panel red accent-1">
+      <div class="space">
+        <h1>Margin Minder</h1>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="container">
+        <div class="card-panel grey lighten-5">
+
+
+          <div class="login">
+          <form action="#">
+
+              <img class="responsive-img" src="Images/GovernmentOfIndiajpg">
+
+          <div class="container">
+             <label><b><font size = "4"> Username</font></b></label>
+             <input type="text" placeholder="Enter your Name" name="uname" required>
+
+             <label><b><font size = "4">Password</font></b></label>
+             <input type="password" placeholder="Enter your Password" name="psw" required>
+
+             <button class="waves-effect waves-light btn" type="submit">Login</button>
+           </div>
+           </form>
+           <p id="signup">Don't have account? <a class="snup" href="#" id="signup">Sign up here</a></p>
+         </div>
+
+
+
+       <div class="signup">
+         <form action="#">
+
+             <img class="responsive-img" src="Images/GovernmentOfIndiajpg">
+
+         <div class="container">
+            <b><font size = "4"> Name</font></b>
+            <input type="text" placeholder="Enter your Name" name="name" required>          /*Tell me what other fields to add*/
+
+            <b><font size = "4">Company Name</font></b>
+            <input type="text" placeholder="Enter your Company Name" name="compname" required>
+
+            <b><font size = "4"> Email address</font></b>
+            <input type="email" placeholder="Enter your Email Address" name="email" required>
+
+            <b><font size = "4">GSTN no</font></b>
+            <input type="text" placeholder="Enter your Password" name="gstn" required>
+
+            <b><font size = "4"> Company address</font></b>
+            <input type="text" placeholder="Enter your Name" name="compadd" required>
+
+            <b><font size = "4">Password :</font></b>
+            <input type="password" name="password" id="password" required>
+
+            <b><font size = "4">Confirm Password :</font></b>
+            <input type="password" name="cpassword" id="cpassword" required>
+
+
+           <button class="waves-effect waves-light btn" type="submit">Register</button>
+          </div>
+          </form>
+        <p id="login">Already have an account? <a class="sign" href="#" id="login">Sign in</a></p>
+        </div>
+
+
+          </div>
+        </div>
+      </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script>
+
+  $(document).ready(function(){
+      $(".signup").hide();
+      $("#signup").click(function(event){
+          event.preventDefault();
+          $(".login").fadeToggle("slow");
+          $(".signup").toggle(1000);
+      });
+      $("#login").click(function(event){
+          event.preventDefault();
+          $(".signup").fadeToggle("slow");
+          $(".login").toggle(1000);
+      });
+  });
+</script>
+</body>
+</html>
