@@ -17,8 +17,7 @@ my $dbh = DBI->connect($dsn,$username,$password, \%attr);
 #do some operations here
 #insert_one_row($dbh, "someXYZ", "password", 1);
 #delete_all_rows($dbh);
-
-#delete_one_row($dbh, "usern");
+#delete_one_row($dbh,"someXYZ");
 #update_one_row($dbh, "usern", "NEW", 1);
 
 # disconnect from the MySQL database
@@ -30,9 +29,11 @@ sub delete_one_row {
     # $dbh: database handle
     # $row_id: id of the row to delete
     my($dbh,$uname)  = @_;
-    my $sql = "DELETE FROM users WHERE uname = ?";
+    my $sql = "DELETE FROM `users` WHERE `users`.`uname` = ?";
     my $sth = $dbh->prepare($sql);
-    return $sth->execute($uname);
+    $sth->execute($uname);
+    $dbh->commit();
+    say "Deleted row successfully!";
 }
  
 sub delete_all_rows {
@@ -41,7 +42,9 @@ sub delete_all_rows {
     my($dbh) = @_;
     my $sql = "TRUNCATE TABLE users";
     my $sth = $dbh->prepare($sql);
-    return $sth->execute(); 
+    $sth->execute(); 
+    $dbh->commit();
+    say "Deleted all rows successfully!";
 }
 
 sub insert_one_row {
@@ -77,4 +80,6 @@ sub update_one_row {
   $sth->execute();
   say "Updated row successfully!";
   $sth->finish();
+  $dbh->commit();
+  say "Updated row successfully!";
 }
