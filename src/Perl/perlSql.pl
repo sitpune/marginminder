@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+#This script gives a general structure for the DB subroutines
+
 use strict;
 use warnings;
 use v5.10; # for say() function
@@ -6,16 +8,16 @@ use DBI;
  
 say "____________MARGIN MINDER____________";
 # MySQL database configurations
-my $dsn = "DBI:mysql:myDB";
+my $dsn = "DBI:mysql:margin_minder";
 my $username = "root";
-my $password = '';
+my $password = 'mySql@123';
 # connect to MySQL database
 my %attr = (RaiseError=>1,  # error handling enabled 
             AutoCommit=>0); # transaction enabled
 my $dbh = DBI->connect($dsn,$username,$password, \%attr);
 
 #do some operations here
-#insert_one_row($dbh, "someXYZ", "password", 1);
+insert_one_row($dbh, "someXYZ", "password", 1);
 #delete_all_rows($dbh);
 #delete_one_row($dbh,"someXYZ");
 #update_one_row($dbh, "usern", "NEW", 1);
