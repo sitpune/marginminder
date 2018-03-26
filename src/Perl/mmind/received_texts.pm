@@ -1,17 +1,17 @@
-package mmind::users;
+package mmind::received_texts;
 use base 'mmind::DBI';
 
-mmind::users->table('users');
+mmind::received_texts->table('received_texts');
 
 #------------SUBROUTINES
 sub delete_one_row {
     # delete one row from some_table
     # $dbh: database handle
     # $row_id: id of the row to delete
-    my($dbh,$uid)  = @_;
-    my $sql = "DELETE FROM `users` WHERE `users`.`uid` = ?";
+    my($dbh,$text_id)  = @_;
+    my $sql = "DELETE FROM `received_texts` WHERE `received_texts`.`text_id` = ?";
     my $sth = $dbh->prepare($sql);
-    $sth->execute($uid);
+    $sth->execute($text_id);
     $dbh->commit();
     say "Deleted row successfully!";
 }
@@ -20,7 +20,7 @@ sub delete_all_rows {
     # delete all rows in some_table
     # $dbh: database handle
     my($dbh) = @_;
-    my $sql = "TRUNCATE TABLE users";
+    my $sql = "TRUNCATE TABLE received_texts";
     my $sth = $dbh->prepare($sql);
     $sth->execute(); 
     $dbh->commit();
@@ -30,10 +30,10 @@ sub delete_all_rows {
 sub insert_one_row {
   eval {
     # do something risky...
-    my($dbh,$uid,$email,$phone,$password,$role_id) = @_;
-    my $sql= "INSERT INTO users (uid,email,phone,password,role_id) VALUE (?,?,?,?,?)";
+    my($dbh,$text_id,$phone.$text) = @_;
+    my $sql= "INSERT INTO received_texts (text_id,phone,text) VALUE (?,?,?)";
     my $sth= $dbh -> prepare($sql);
-    $sth -> execute($uid,$email,$phone,$password,$role_id);
+    $sth -> execute($text_id,$phone,$text);
     # if everything is OK, commit to the database
     $dbh->commit();
     say "Inserted row successfully!";
@@ -46,16 +46,14 @@ sub insert_one_row {
 }
 
 sub update_one_row {
-  my($dbh,$uid,$email,$phone,$password,$role_id)  = @_;
-  my $sql = "UPDATE users
-           SET email = ?, 
-               phone = ?,
-		password = ?,
-		role_id = ?
-    WHERE uid = ?";
+  my($dbh,$text_id,$phone,$text)  = @_;
+  my $sql = "UPDATE received_texts
+           SET phone = ?, 
+               text = ?
+    WHERE text_id = ?";
   my $sth = $dbh->prepare($sql);
   # execute the query
-  $sth->execute($email,$phone,$password,$role_id,$uid);
+  $sth->execute($text_id,$phone,$text);
   say "Updated row successfully!";
   $sth->finish();
   $dbh->commit();

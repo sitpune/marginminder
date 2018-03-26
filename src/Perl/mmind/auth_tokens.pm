@@ -1,7 +1,7 @@
-package mmind::users;
+package mmind::auth_tokens;
 use base 'mmind::DBI';
 
-mmind::users->table('users');
+mmind::auth_tokens->table('auth_tokens');
 
 #------------SUBROUTINES
 sub delete_one_row {
@@ -9,7 +9,7 @@ sub delete_one_row {
     # $dbh: database handle
     # $row_id: id of the row to delete
     my($dbh,$uid)  = @_;
-    my $sql = "DELETE FROM `users` WHERE `users`.`uid` = ?";
+    my $sql = "DELETE FROM `auth_tokens` WHERE `auth_tokens`.`uid` = ?";
     my $sth = $dbh->prepare($sql);
     $sth->execute($uid);
     $dbh->commit();
@@ -20,7 +20,7 @@ sub delete_all_rows {
     # delete all rows in some_table
     # $dbh: database handle
     my($dbh) = @_;
-    my $sql = "TRUNCATE TABLE users";
+    my $sql = "TRUNCATE TABLE auth_tokens";
     my $sth = $dbh->prepare($sql);
     $sth->execute(); 
     $dbh->commit();
@@ -30,10 +30,10 @@ sub delete_all_rows {
 sub insert_one_row {
   eval {
     # do something risky...
-    my($dbh,$uid,$email,$phone,$password,$role_id) = @_;
-    my $sql= "INSERT INTO users (uid,email,phone,password,role_id) VALUE (?,?,?,?,?)";
+    my($dbh,$uid,$token) = @_;
+    my $sql= "INSERT INTO auth_tokens (uid,token) VALUE (?,?)";
     my $sth= $dbh -> prepare($sql);
-    $sth -> execute($uid,$email,$phone,$password,$role_id);
+    $sth -> execute($uid,$token);
     # if everything is OK, commit to the database
     $dbh->commit();
     say "Inserted row successfully!";
@@ -46,16 +46,13 @@ sub insert_one_row {
 }
 
 sub update_one_row {
-  my($dbh,$uid,$email,$phone,$password,$role_id)  = @_;
-  my $sql = "UPDATE users
-           SET email = ?, 
-               phone = ?,
-		password = ?,
-		role_id = ?
+  my($dbh,$uid,$token)  = @_;
+  my $sql = "UPDATE auth_tokens
+           SET token = ?
     WHERE uid = ?";
   my $sth = $dbh->prepare($sql);
   # execute the query
-  $sth->execute($email,$phone,$password,$role_id,$uid);
+  $sth->execute($token,$uid);
   say "Updated row successfully!";
   $sth->finish();
   $dbh->commit();
